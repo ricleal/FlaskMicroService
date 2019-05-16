@@ -1,0 +1,8 @@
+-r requirements.txt
+
+# for linting and formatting 
+autopep8
+flake8
+
+#
+pytest
