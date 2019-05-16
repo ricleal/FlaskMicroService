@@ -1,8 +1,8 @@
 -r requirements.txt
 
 # for linting and formatting 
-autopep8
-flake8
+autopep8==1.4.4
+flake8==3.7.7
 
 #
-pytest
+pytest==4.5.0

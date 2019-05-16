@@ -30,3 +30,32 @@ source venv/bin/activate
 pip install -r requirements_dev.txt 
 
 ```
+
+## Production
+
+Install the requirements production.
+
+```
+pip install -r requirements_prod.txt 
+```
+
+Launch the flask service with gunicorn, e.g.:
+
+```bash
+gunicorn -w 2 --bind 0.0.0.0:8000 app.wsgi:app
+```
+
+### Docker
+
+```bash
+cd backend/
+# Build the image:
+docker build --tag=flask_microservice .
+# Make sure it's there
+docker image ls
+# Run it in foreground (use -d to run as detached - background): local port is 8080
+docker run -p 8080:8000 flask_microservice
+# Test it in the browser:
+# http://localhost:8080/todos
+
+```
