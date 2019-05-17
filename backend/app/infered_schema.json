@@ -1,0 +1,125 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/root.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "required": [
+      "title",
+      "authors",
+      "categories"
+    ],
+    "properties": {
+      "title": {
+        "$id": "#/properties/title",
+        "type": "string",
+        "title": "The Title Schema",
+        "default": "",
+        "examples": [
+          "Unlocking Android"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "isbn": {
+        "$id": "#/properties/isbn",
+        "type": "string",
+        "title": "The Isbn Schema",
+        "default": "",
+        "examples": [
+          "1933988673"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "pageCount": {
+        "$id": "#/properties/pageCount",
+        "type": "integer",
+        "title": "The Pagecount Schema",
+        "default": 0,
+        "examples": [
+          416
+        ]
+      },
+      "publishedDate": {
+        "$id": "#/properties/publishedDate",
+        "type": "string",
+        "title": "The Publisheddate Schema",
+        "default": "",
+        "examples": [
+          "2009-04-01T00:00:00.000-0700"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "thumbnailUrl": {
+        "$id": "#/properties/thumbnailUrl",
+        "type": "string",
+        "title": "The Thumbnailurl Schema",
+        "default": "",
+        "examples": [
+          "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson.jpg"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "shortDescription": {
+        "$id": "#/properties/shortDescription",
+        "type": "string",
+        "title": "The Shortdescription Schema",
+        "default": "",
+        "examples": [
+          "Short Description."
+        ],
+        "pattern": "^(.*)$"
+      },
+      "longDescription": {
+        "$id": "#/properties/longDescription",
+        "type": "string",
+        "title": "The Longdescription Schema",
+        "default": "",
+        "examples": [
+          "Long Description."
+        ],
+        "pattern": "^(.*)$"
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "string",
+        "title": "The Status Schema",
+        "default": "",
+        "examples": [
+          "PUBLISH"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "authors": {
+        "$id": "#/properties/authors",
+        "type": "array",
+        "title": "The Authors Schema",
+        "items": {
+          "$id": "#/properties/authors/items",
+          "type": "string",
+          "title": "The Items Schema",
+          "default": "",
+          "examples": [
+            "W. Frank Ableson",
+            "Charlie Collins"
+          ],
+          "pattern": "^(.*)$"
+        }
+      },
+      "categories": {
+        "$id": "#/properties/categories",
+        "type": "array",
+        "title": "The Categories Schema",
+        "items": {
+          "$id": "#/properties/categories/items",
+          "type": "string",
+          "title": "The Items Schema",
+          "default": "",
+          "examples": [
+            "Open Source",
+            "Mobile"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
