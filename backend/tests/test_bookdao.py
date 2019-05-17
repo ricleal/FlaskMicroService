@@ -15,7 +15,9 @@ def book_id():
     with client:
         db = client.testdb
         book = db.books.find_one()
-        return str(book['_id'])
+        id = str(book['_id'])
+        print('\n', 79*"*", '\n', 'Tests with ID = {}\n'.format(id), 79*"*")
+        return id
 
 
 def test_book_dao_get(book_dao, book_id):
