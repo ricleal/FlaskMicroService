@@ -1,6 +1,4 @@
 from app.api import BookDAO
-from pymongo import MongoClient
-from werkzeug.exceptions import NotFound
 import pytest
 
 
@@ -11,13 +9,7 @@ def book_dao():
 
 @pytest.fixture
 def book_id():
-    client = MongoClient()
-    with client:
-        db = client.testdb
-        book = db.books.find_one()
-        id = str(book['_id'])
-        print('\n', 79*"*", '\n', 'Tests with ID = {}\n'.format(id), 79*"*")
-        return id
+    return 100
 
 
 def test_book_dao_get(book_dao, book_id):
@@ -26,7 +18,9 @@ def test_book_dao_get(book_dao, book_id):
 
 
 def test_book_create_update_delete(book_dao):
+    data_id = 10001
     data = {
+        "id": data_id,
         "title": "Test Book",
         "isbn": "1234",
         "pageCount": 520,
@@ -46,19 +40,25 @@ def test_book_create_update_delete(book_dao):
     inserted_id = book_dao.create(data)
     assert inserted_id is not None
     # Get
-    book_fetched = book_dao.get(inserted_id)
+    book_fetched = book_dao.get(data_id)
     assert book_fetched is not None
     assert book_fetched['title'] == "Test Book"
     # update
-    updated_count = book_dao.update(inserted_id, {"title": "Test Book 2"})
+    updated_count = book_dao.update(data_id, {"title": "Test Book 2"})
     assert updated_count == 1
     # Get
-    book_fetched = book_dao.get(inserted_id)
+    book_fetched = book_dao.get(data_id)
     assert book_fetched is not None
     assert book_fetched['title'] == "Test Book 2"
     # Delete
-    delete_count = book_dao.delete(inserted_id)
+    delete_count = book_dao.delete(data_id)
     assert delete_count == 1
     # Get
-    with pytest.raises(NotFound):
-        book_dao.get(inserted_id)
+    book_fetched = book_dao.get(data_id)
+    assert book_fetched is None
+
+
+def test_books_get_all(book_dao):
+    # Get All
+    books_fetched = book_dao.get_all()
+    assert len(books_fetched) == 431

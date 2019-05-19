@@ -10,5 +10,5 @@ with client:
     # for book in db.books.find():
     #     print(book['title'])
     
-    book = db.books.find_one()
-    pprint(str(book['_id']))
+    book = db.books.find_one({'id': 1}, {'_id': False})
+    pprint(book)

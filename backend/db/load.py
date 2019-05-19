@@ -19,6 +19,9 @@ with client:
 
     with open(os.path.join(dir_path, 'catalog.books.json')) as json_file:
         data = json.load(json_file, object_hook=json_util.object_hook)
+        # add an id to every book
+        for index, d in enumerate(data):
+            d['id'] = index+1
         print("Adding to the collection Books")
         db.books.insert_many(data)
 
