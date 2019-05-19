@@ -50,6 +50,8 @@ dao = BookDAO()
 
 class Book(Resource):
     '''
+    Class that handles REST for '/books/<int:book_id>'
+    get, delete and put (update)
     '''
 
     def get(self, book_id):
