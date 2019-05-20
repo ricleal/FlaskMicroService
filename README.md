@@ -1,3 +1,7 @@
+# TODO:
+
+- VueJS Frontend
+
 # FlaskMicroService
 Flask RestFULL API, mongodb, gunicorn, docker + VueJS Frontend
 
@@ -61,7 +65,6 @@ docker run -p 8080:8000 flask_microservice
 ```
 
 # Front end
-
 
 ## Instalation
 
