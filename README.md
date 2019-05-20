@@ -59,3 +59,37 @@ docker run -p 8080:8000 flask_microservice
 # http://localhost:8080/todos
 
 ```
+
+# Front end
+
+
+## Instalation
+
+Assuming that nodejs is installed:
+
+```
+sudo npm install -g @vue/cli
+```
+
+Type:
+```
+$ vue --version
+3.7.0
+```
+You should have something similar to this.
+
+To create a new project
+```
+vue create flask-example
+```
+
+Select:
+- Babel
+- Router
+- VueX
+- Linter
+- Unit Testing
+
+All the rest default
+
+
