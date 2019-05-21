@@ -35,6 +35,20 @@ pip install -r requirements_dev.txt
 
 ```
 
+## Mongo DB
+
+Launch mongo as:
+
+```
+mongod --dbpath=./data/db --smallfiles
+```
+
+Load some initial data:
+```
+python db/load.py
+```
+
+
 ## Production
 
 Install the requirements production.
@@ -53,15 +67,22 @@ gunicorn -w 2 --bind 0.0.0.0:8000 app.wsgi:app
 
 ```bash
 cd backend/
-# Build the image:
-docker build --tag=flask_microservice .
-# Make sure it's there
-docker image ls
-# Run it in foreground (use -d to run as detached - background): local port is 8080
-docker run -p 8080:8000 flask_microservice
-# Test it in the browser:
-# http://localhost:8080/todos
 
+#
+docker-compose up --build
+
+# See containers running
+docker ps
+
+# Test it in the browser:
+# http://localhost:8080/books
+
+```
+
+** Test with curl **
+
+```
+curl -X GET http://localhost:8000/books
 ```
 
 # Front end
