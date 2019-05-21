@@ -3,6 +3,7 @@
 from flask import Flask
 from flask_restful import Api, Resource, abort, reqparse
 from .book_dao import BookDAOMongo as BookDAO
+from .validate import validator_decorator
 
 app = Flask(__name__)
 api = Api(app)
@@ -48,6 +49,7 @@ class BookList(Resource):
         books = dao.get_all()
         return books
 
+    @validator_decorator
     def post(self):
         # json_data = request.get_json(force=True)
         args = parser.parse_args()

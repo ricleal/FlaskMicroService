@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [
+        "id",
+        "title",
+        "authors",
+        "categories"
+    ],
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "title": {
+            "type": "string"
+        },
+        "isbn": {
+            "type": "string"
+        },
+        "pageCount": {
+            "type": "number"
+        },
+        "publishedDate": {
+            "type": "string"
+        },
+        "thumbnailUrl": {
+            "type": "string"
+        },
+        "longDescription": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        },
+        "authors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "categories": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}
