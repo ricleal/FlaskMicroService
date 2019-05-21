@@ -6,6 +6,9 @@ services:
    - "8080:8000"
   volumes:
    - .:/app
+  environment:
+    - MONGO_HOST=mongodb
+    - MONGO_PORT=27017
   working_dir: /app
   command: >
     bash -c "pip install -r requirements_prod.txt
@@ -14,9 +17,9 @@ services:
     - mongodb
  mongodb:
   image: mongo:latest
-  container_name: "mongodb"
+  container_name: mongodb
   volumes:
-   - ./data/db:/usr/data/db
+   - ./data/db:/data/db
   ports:
    - 27017:27017
-  command: mongod --smallfiles --bind_ip 127.0.0.1 # --logpath=/dev/null # --quiet
+  command: mongod --smallfiles # --logpath=/dev/null # --quiet

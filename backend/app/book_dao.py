@@ -43,7 +43,12 @@ class BookDAOMongo(BookDAO):
     '''
 
     def __init__(self):
-        client = MongoClient()
+        if not os.environ.get('MONGO_HOST'):
+            os.environ['MONGO_HOST']="localhost"
+        if not os.environ.get('MONGO_PORT'):
+            os.environ['MONGO_PORT']="27017"
+        client = MongoClient(
+            host=os.environ['MONGO_HOST'], port=int(os.environ['MONGO_PORT']))
         db = client.testdb
         self.book_collection = db.books
 
