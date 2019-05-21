@@ -37,18 +37,18 @@ def test_book_create_update_delete(client):
             "Test 2",
         ]
     }
-    
+
     # Insert
     response = client.post('/books', data=json.dumps({"book": data}),
                            content_type='application/json')
     assert response.status_code == 201
     assert 'inserted_id' in _get_response_data_as_dict(response).keys()
-    
+
     # Get inserted book
     response = client.get('/books/{}'.format(data_id))
     assert response.status_code == 200
     assert _get_response_data_as_dict(response)['title'] == "Test Book"
-    
+
     # update
     response = client.put(
         '/books/{}'.format(data_id),
@@ -56,12 +56,12 @@ def test_book_create_update_delete(client):
         content_type='application/json')
     assert response.status_code == 201
     assert 'matched_count' in _get_response_data_as_dict(response).keys()
-    
+
     # Get updated book
     response = client.get('/books/{}'.format(data_id))
     assert response.status_code == 200
     assert _get_response_data_as_dict(response)['title'] == "Test Book 2"
-    
+
     # delete inserted / update book
     response = client.delete(
         '/books/{}'.format(data_id),

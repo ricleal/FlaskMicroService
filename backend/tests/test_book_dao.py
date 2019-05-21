@@ -1,22 +1,19 @@
-from app.api import BookDAO
+from app.book_dao import BookDAODict, BookDAOMongo
 import pytest
 
-
-@pytest.fixture
-def book_dao():
-    return BookDAO()
-
+book_dao_mongo = BookDAOMongo()
+book_dao_dict = BookDAODict()
 
 @pytest.fixture
 def book_id():
     return 100
 
-
-def test_book_dao_get(book_dao, book_id):
+@pytest.mark.parametrize("book_dao", [book_dao_mongo, book_dao_dict])
+def test_book_dao_get(book_id, book_dao):
     book = book_dao.get(book_id)
     assert book is not None
 
-
+@pytest.mark.parametrize("book_dao", [book_dao_mongo, book_dao_dict])
 def test_book_create_update_delete(book_dao):
     data_id = 10001
     data = {
@@ -58,6 +55,7 @@ def test_book_create_update_delete(book_dao):
     assert book_fetched is None
 
 
+@pytest.mark.parametrize("book_dao", [book_dao_mongo, book_dao_dict])
 def test_books_get_all(book_dao):
     # Get All
     books_fetched = book_dao.get_all()
