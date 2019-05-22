@@ -1,7 +1,9 @@
 from jsonschema import validate
 import os
 import json
-from flask import request
+from flask import request, jsonify, abort
+from jsonschema.exceptions import ValidationError
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 with open(os.path.join(dir_path, 'schema.json')) \
@@ -9,7 +11,7 @@ with open(os.path.join(dir_path, 'schema.json')) \
     schema = json.load(json_file)
 
 # validate(instance={
-#     "id": 1,
+#     "id": 2345,
 #     "title": "Flex 4 in Action",
 #     "isbn": "1935182420",
 #     "pageCount": 600,
@@ -33,6 +35,9 @@ def validator_decorator(func):
     ''' Validator decorator to use in Flask '''
     def func_wrapper(*args, **kwargs):
         json_data = request.get_json(force=True)
-        validate(instance=json_data['book'], schema=schema)
+        try:
+            validate(instance=json_data['book'], schema=schema)
+        except ValidationError:
+            return abort(422)
         return func(*args, **kwargs)
     return func_wrapper

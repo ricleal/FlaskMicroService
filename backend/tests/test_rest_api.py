@@ -75,3 +75,29 @@ def test_book_create_update_delete(client):
     assert 'message' in _get_response_data_as_dict(response).keys()
     assert _get_response_data_as_dict(response)['message'] == \
         "Book {} doesn\'t exist".format(data_id)
+
+
+def test_book_validation(client):
+
+    data = {
+        "title": "Test Book",
+        "isbn": "1234",
+        "pageCount": 520,
+        "publishedDate": "2000-08-01T00:00:00.000-0700",
+        "thumbnailUrl": "http://www.test.com/test.jpg",
+        "longDescription": "",
+        "status": "PUBLISH",
+        "authors": [
+            "Jonh Doe"
+        ],
+        "categories": [
+            "Test 1",
+            "Test 2",
+        ]
+    }
+
+    # Insert
+    response = client.post('/books', data=json.dumps({"book": data}),
+                           content_type='application/json')
+    assert response.status_code == 422
+    assert 'message' in _get_response_data_as_dict(response).keys()

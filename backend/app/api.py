@@ -51,7 +51,6 @@ class BookList(Resource):
 
     @validator_decorator
     def post(self):
-        # json_data = request.get_json(force=True)
         args = parser.parse_args()
         inserted_id = dao.create(args['book'])
         return {'inserted_id': inserted_id}, 201
