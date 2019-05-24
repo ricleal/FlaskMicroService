@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+        body {
+            font-family: 'Droid Serif';
+        }
+        
+        h1,
+        h2,
+        h3 {
+            font-family: 'Yanone Kaffeesatz';
+            font-weight: normal;
+        }
+        
+        .remark-code,
+        .remark-inline-code {
+            font-family: 'Ubuntu Mono';
+        }
+        
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="source">
+
+class: center, middle
+
+# Microservices
+
+Ricardo M. Ferraz Leal
+
+![](https://cdn-images-1.medium.com/max/800/1*Hp5yH_dUxIHrnBgYuq7n5w.png)
+
+[rhf@ornl.gov](mailto:rhf@ornl.gov?subject=CleanCodeIn5Minutes)
+
+---
+
+# RESTful json web service
+
+![](http://safehammad.com/wp-uploads/2010/10/json-rest3.png)
+
+---
+
+# HTTP Codes
+
+![](https://raw.githubusercontent.com/DennyZhang/images/master/design/basic_rest_example.png)
+
+---
+
+#  REST API
+
+A RESTful API is an application program interface (API) that uses HTTP requests to GET, PUT, POST and DELETE data.
+
+Representational State Transfer (REST) is a software architectural style that defines a set of constraints to be used for creating Web services. Web services that conform to the REST architectural style, called RESTful Web services (RWS), provide interoperability between computer systems on the Internet. RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless operations. 
+
+![](https://phpenthusiast.com/theme/assets/images/blog/what_is_rest_api.png)
+
+
+---
+
+## Evolution
+
+
+![](https://cdn-images-1.medium.com/max/1800/1*TywA_mAYuu8tMG8P2gsrtQ.png)
+
+---
+
+# Example
+
+![](https://inform.tmforum.org/wp-content/uploads/2017/02/flo.ci-microservices-architecture.png)
+
+---
+
+## Advantages
+
+- **Loose Coupling**: When services are loosely coupled, a change to one service should not require a change to another. The whole point of this Microservice thing is being able to make a change to one service, and deploy it, independent of a need to change any other part of the system. This is really quite important.
+
+- **Strong Cohesion**: We want related behaviour to sit together, and unrelated behaviour to sit elsewhere. Why? Well, if we want to change behaviour, we want to be able to change it in one place, and release that change as soon as possible.
+
+---
+
+## Micro Frontends approach
+
+![](https://syndicode.com/wp-content/uploads/2017/08/Microservices-e1502445218672.png)
+
+
+
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+        var slideshow = remark.create();
+    </script>
+</body>
+
+</html>
