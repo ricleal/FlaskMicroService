@@ -4,37 +4,24 @@ app = Flask(__name__)
 
 books = [
     {
-        "id": 1,
+        "id": 0,
         "title": "Test Book 1",
-        "isbn": "1234",
-        "pageCount": 10,
-        "publishedDate": "2017-08-01T00:00:00.000-0700",
-        "thumbnailUrl": "http://www.test.com/test.jpg",
-        "longDescription": "",
-        "status": "PUBLISH",
+        "isbn": "9781234567897",
+        "published_date": "2019-04-12",
         "authors": [
-            "Jonh Doe"
-        ],
-        "categories": [
-            "Test 1",
-            "Test 2",
+            "Rea Horne",
+            "Cristiano Searle"
         ]
     },
     {
-        "id": 2,
-        "title": "Test Book",
-        "isbn": "5678",
-        "pageCount": 20,
-        "publishedDate": "2018-08-01T00:00:00.000-0700",
-        "thumbnailUrl": "http://www.test.com/test.jpg",
-        "longDescription": "",
-        "status": "PUBLISH",
+        "id": 1,
+        "title": "Test Book 2",
+        "isbn": "9781234562397",
+        "published_date": "2018-03-12",
         "authors": [
-            "Mohamed Doe"
-        ],
-        "categories": [
-            "Test 1",
-            "Test 3",
+            "Abbey Sullivan",
+            "Paige Parry",
+            "Tahir Frey",
         ]
     }
 ]
@@ -57,6 +44,7 @@ def add_book():
     books.append(data)
     return "", 204
 
+
 @app.route('/books', methods=['PUT'])
 def update_book():
     '''
@@ -75,7 +63,6 @@ def update_book():
     data = request.get_json()
     [d.update(data) for d in books if d['id'] == data['id']]
     return "", 201
-
 
 
 if __name__ == "__main__":

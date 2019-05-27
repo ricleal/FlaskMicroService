@@ -1,8 +1,7 @@
-#!/usr/bin/python3
 import json
 import os
 
-from .book_dao import BookDAOMongo as BookDAO
+from .bookshelf import BookShelf
 from flask import Flask
 from flask_restplus import Api, Resource
 

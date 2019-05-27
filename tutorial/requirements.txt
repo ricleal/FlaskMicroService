@@ -1,0 +1,6 @@
+flask>=1.0
+flask-restful>=0.3
+json-schema
+
+#
+pytest
