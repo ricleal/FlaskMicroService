@@ -31,5 +31,4 @@ Same as 2 with validation decorator
 
 ## 5
 
-
 Flask RESTFull Plus: flask_restplus

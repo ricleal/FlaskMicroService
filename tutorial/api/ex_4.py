@@ -1,3 +1,8 @@
+r'''
+Flask RESTFull: using flask_restful package and jsonschema for validation
+Create a decorator to validate
+'''
+
 from flask import Flask, request
 from flask_restful import Api, Resource, abort, reqparse
 from .bookshelf import BookShelf
@@ -96,7 +101,9 @@ class BookList(Resource):
     def post(self):
         '''
         curl -X PUT -H "Content-Type: application/json" \
-        -d '{ "book": { "id": 10, "title": "Test Book 1", "isbn": "9781234567897", "published_date": "2019-04-13", "authors": [ "Rea Horne", "Cristiano Searle" ] } }' \
+        -d '{ "book": { "id": 10, "title": "Test Book 1", \
+            "isbn": "9781234567897", "published_date": "2019-04-13", \
+            "authors": [ "Rea Horne", "Cristiano Searle" ] } }' \
         http://127.0.0.1:5000/books
         '''
         args = parser.parse_args()

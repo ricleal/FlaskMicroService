@@ -1,5 +1,10 @@
+r'''
+Using jsonschema to show how to validate XML
+'''
+
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
+
 
 book_right = {
     "id": 0,

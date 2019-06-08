@@ -1,5 +1,8 @@
+r'''
+Flask RESTFull Plus: using flask_restplus package
+'''
+
 import json
-import os
 
 from .bookshelf import BookShelf
 from flask import Flask
@@ -10,20 +13,43 @@ api = Api(app, version='0.1', title='Book API',
           description='A simple Book info API')
 
 
-def get_schema_as_dict(filename=os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), 'schema.json')):
-    ''' Parses the filename and builds a dictionary from json '''
-    with open(filename) as json_file:
-        data = json.load(json_file)
-        return data
+schema = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [
+        "id",
+        "title",
+    ],
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "title": {
+            "type": "string"
+        },
+        "isbn": {
+            "type": "string"
+        },
+        "published_date": {
+            "type": "string"
+        },
+        "authors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+    },
+    "additionalProperties": False
+}
 
 
 # @ns.marshal_with does not work with schema_as_dict and nested json
 # follow bug here: https://github.com/noirbizarre/flask-restplus/pull/640
 ns = api.namespace('books', description='Book operations')
-book_schema = api.schema_model('Book', get_schema_as_dict())
+book_schema = api.schema_model('Book', schema)
 
-dao = BookDAO()
+dao = BookShelf()
 
 
 @ns.route('/<int:book_id>')

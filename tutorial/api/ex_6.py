@@ -1,10 +1,14 @@
 r'''
 Flask RESTFull: using flask_restful package
-This is the example that will folow us throughout the tutorial
+With cache
 '''
+from operator import attrgetter
 
 from flask import Flask
 from flask_restful import Api, Resource, abort, reqparse
+
+from cachetools import LRUCache, TTLCache, cachedmethod
+
 from .bookshelf import BookShelf
 
 app = Flask(__name__)
@@ -22,7 +26,12 @@ class Book(Resource):
     get, delete and put (update)
     '''
 
+    # cache least recently used Python Enhancement Proposals
+    cache_lru = LRUCache(maxsize=32)
+
+    @cachedmethod(attrgetter('cache_lru'))
     def get(self, book_id):
+        print("Calling <Book.get> book_id={}".format(book_id))
         book = dao.get(book_id)
         if not book:
             abort(404, message="Book {} doesn't exist".format(book_id))
@@ -49,7 +58,12 @@ class Book(Resource):
 class BookList(Resource):
     ''' shows a list of all Books, and lets you POST to add new tasks '''
 
+    # cache weather data for no longer than ten minutes
+    cache_ttl = TTLCache(maxsize=1024, ttl=600)
+
+    @cachedmethod(attrgetter('cache_ttl'))
     def get(self):
+        print("Calling <BookList.get>")
         return dao.get_all()
 
     def post(self):
