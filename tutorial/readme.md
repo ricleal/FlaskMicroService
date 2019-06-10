@@ -5,7 +5,6 @@
 ## Slides
 
 To view the slides just open them on the browser.
-(incomplete)
 
 ## Examples
 
@@ -35,3 +34,20 @@ To view the slides just open them on the browser.
 * `ex_6.py`
   * Flask RESTFull: `flask_restful` & Memoization: `cachetools`
 
+### Run the examples:
+
+
+```sh
+# create a virtual environment
+virtualenv -p python3 venv
+
+# Activate it
+source venv/bin/activate
+
+# Install the requirements
+pip install -r requirements.txt
+
+# run an example
+python -m api.ex_0
+
+```
