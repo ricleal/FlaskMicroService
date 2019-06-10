@@ -57,9 +57,14 @@ schema = {
     "additionalProperties": False
 }
 
-validate(instance=book_right, schema=schema)
 
-try:
-    validate(instance=book_wrong, schema=schema)
-except ValidationError as e:
-    print(str(e))
+if __name__ == '__main__':
+
+    print("** Valid JSON...")
+    validate(instance=book_right, schema=schema)
+
+    print("** Invalid JSON:")
+    try:
+        validate(instance=book_wrong, schema=schema)
+    except ValidationError as e:
+        print(str(e))
