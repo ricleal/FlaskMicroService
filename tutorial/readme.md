@@ -11,10 +11,12 @@ To view the slides just open them on the browser.
 
 ### Requirements:
 
-A REST Client to test the API.
-* Google Chrome: "Tabbed Postman - REST Client"
-* Firefox: "RESTClient"
-* Or `curl` if you are brave
+* Python >= 3.6
+* `pip` or `conda` (needs to read and install the `requirements.txt` file).
+* A REST Client to test the API.
+ * Google Chrome: "Tabbed Postman - REST Client"
+ * Firefox: "RESTClient"
+ * Or `curl` if you are brave
 
 ### Examples in the `api` folder
 
