@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Title</title>
+    <title>Flask Microservices</title>
     <meta charset="utf-8">
     <style>
         @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -39,32 +39,9 @@ class: center, middle
 
 Ricardo M. Ferraz Leal
 
-![](https://cdn-images-1.medium.com/max/800/1*Hp5yH_dUxIHrnBgYuq7n5w.png)
+![:scale 70%](https://cdn-images-1.medium.com/max/800/1*Hp5yH_dUxIHrnBgYuq7n5w.png)
 
-[rhf@ornl.gov](mailto:rhf@ornl.gov?subject=CleanCodeIn5Minutes)
-
----
-
-# RESTful json web service
-
-![](http://safehammad.com/wp-uploads/2010/10/json-rest3.png)
-
----
-
-# HTTP Codes
-
-![](https://raw.githubusercontent.com/DennyZhang/images/master/design/basic_rest_example.png)
-
----
-
-#  REST API
-
-A RESTful API is an application program interface (API) that uses HTTP requests to GET, PUT, POST and DELETE data.
-
-Representational State Transfer (REST) is a software architectural style that defines a set of constraints to be used for creating Web services. Web services that conform to the REST architectural style, called RESTful Web services (RWS), provide interoperability between computer systems on the Internet. RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless operations. 
-
-![](https://phpenthusiast.com/theme/assets/images/blog/what_is_rest_api.png)
-
+[rhf@ornl.gov](mailto:rhf@ornl.gov?subject=Microservices_Tutorial)
 
 ---
 
@@ -72,6 +49,40 @@ Representational State Transfer (REST) is a software architectural style that de
 
 
 ![](https://cdn-images-1.medium.com/max/1800/1*TywA_mAYuu8tMG8P2gsrtQ.png)
+
+---
+
+# JSON communication in a web service
+
+![](http://safehammad.com/wp-uploads/2010/10/json-rest3.png)
+
+---
+
+#  REST API
+
+A RESTful API is an application program interface (API) that uses HTTP requests
+to GET, PUT, POST and DELETE data.
+
+![:scale 70%](https://phpenthusiast.com/theme/assets/images/blog/what_is_rest_api.png)
+
+Representational State Transfer (REST) is a software architectural style that
+defines a set of constraints to be used for creating Web services. Web services
+that conform to the REST architectural style, called RESTful Web services (RWS),
+provide interoperability between computer systems on the Internet.
+RESTful Web services allow the requesting systems to access and manipulate
+textual representations of Web resources by using a uniform and predefined set
+of stateless operations. 
+
+---
+
+# HTTP Protocol and Methods
+
+![:scale 40%](https://mdn.mozillademos.org/files/14293/simple_req.png)
+
+![:scale 80%](https://raw.githubusercontent.com/DennyZhang/images/master/design/basic_rest_example.png)
+
+
+
 
 ---
 
@@ -83,25 +94,31 @@ Representational State Transfer (REST) is a software architectural style that de
 
 ## Advantages
 
-- **Loose Coupling**: When services are loosely coupled, a change to one service should not require a change to another. The whole point of this Microservice thing is being able to make a change to one service, and deploy it, independent of a need to change any other part of the system. This is really quite important.
+- **Loose Coupling**: When services are loosely coupled, a change to one service
+should not require a change to another. The whole point of this Microservice
+thing is being able to make a change to one service, and deploy it, independent
+of a need to change any other part of the system. This is really quite important.
 
-- **Strong Cohesion**: We want related behaviour to sit together, and unrelated behaviour to sit elsewhere. Why? Well, if we want to change behaviour, we want to be able to change it in one place, and release that change as soon as possible.
+- **Strong Cohesion**: We want related behaviour to sit together, and unrelated
+behaviour to sit elsewhere. Why? Well, if we want to change behaviour, we want
+to be able to change it in one place, and release that change as soon as possible.
 
----
+<!--
+
 
 ## Micro Frontends approach
 
 ![](https://syndicode.com/wp-content/uploads/2017/08/Microservices-e1502445218672.png)
 
-
-
-
-
+-->
 
     </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
-    </script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
     <script>
+        remark.macros['scale'] = function(percentage) {
+            var url = this;
+            return '<img src="' + url + '" style="width: ' + percentage + '" />';
+        };
         var slideshow = remark.create();
     </script>
 </body>
