@@ -34,16 +34,31 @@ books = [
 
 @app.route('/', methods=['GET'])
 def get_all():
+    '''
+    http://127.0.0.1:5000/
+    '''
     return jsonify(books)
 
 
 @app.route('/books', methods=['POST'])
 def add_book():
     '''
-    To test:
+    To test with curl:
+
     curl -X POST -H "Content-Type: application/json" \
-    -d '{"id": 123, "title": "Test Book from post"}' \
+    -d "{\"id\": 123, \"title\": \"Test Book from post \
+    $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)\"}" \
     http://127.0.0.1:5000/books
+
+    To test using VSCode REST Client:
+    
+    POST http://127.0.0.1:5000/books HTTP/1.1
+    content-type: application/json
+
+    {
+        "id": 123,
+        "title": "Test Book from post"
+    }
     '''
     data = request.get_json()
     books.append(data)
@@ -66,7 +81,7 @@ def update_book():
 
     '''
     data = request.get_json()
-    [d.update(data) for d in books if d['id'] == data['id']]
+    _ = [d.update(data) for d in books if d['id'] == data['id']]
     return "", 201
 
 
