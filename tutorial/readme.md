@@ -33,6 +33,9 @@ To view the slides just open them on the browser.
   * Flask RESTFull Plus: `flask_restplus`
 * `ex_6.py`
   * Flask RESTFull: `flask_restful` & Memoization: `cachetools`
+* **TODO:** `ex_7.py`
+  * Flask RESTFull: `flask_restful` & ORM: `SQLAlchemy`
+
 
 ### Run the examples:
 
