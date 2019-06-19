@@ -3,5 +3,6 @@ flask-restful>=0.3
 json-schema
 flask_restplus
 cachetools
+sqlalchemy
 #
 pytest
