@@ -34,8 +34,9 @@ To view the slides just open them on the browser.
 * `ex_6.py`
   * Flask RESTFull: `flask_restful` & Memoization: `cachetools`
 * **TODO:** `ex_7.py`
-  * Flask RESTFull: `flask_restful` & ORM: `SQLAlchemy`
-
+  * Flask RESTFull with DB: `flask_restful` & ORM: `SQLAlchemy`
+* **TODO:** `ex_8.py`
+  * Flask RESTFull with GraphQL: `flask_restful`,  ORM: `SQLAlchemy` & GtaphQL `Graphene`
 
 ### Run the examples:
 
