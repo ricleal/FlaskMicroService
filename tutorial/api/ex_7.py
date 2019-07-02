@@ -10,10 +10,17 @@ from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from marshmallow_sqlalchemy import ModelSchema
+from marshmallow import fields
+
 from faker import Faker
 
 app = Flask(__name__)
 api = Api(app)
+
+# Define this before to avoid warning!
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
@@ -24,8 +31,6 @@ parser.add_argument('book', type=dict)
 
 ##############################################################################
 # SQL
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 
 
 books_authors_table = db.Table(
@@ -46,7 +51,7 @@ class Book(db.Model):
     authors = db.relationship(
         "Author",
         secondary=books_authors_table,
-        back_populates="books"
+        back_populates="books",
     )
 
     def __repr__(self):
@@ -69,13 +74,30 @@ class Author(db.Model):
     def __repr__(self):
         return '<Author %r>' % self.last_name
 
+db.create_all()
 
-class BookSchema(ma.Schema):
+
+
+
+
+
+class AuthorSchema(ModelSchema):
     class Meta:
-        # Fields to expose
-        fields = ('title', 'isbn', 'authors')
+        model = Author
 
 
+class BookSchema(ModelSchema):
+
+    authors = fields.Nested(
+        AuthorSchema, many=True, exclude=("books",) # Exclude in the target model
+    )
+
+    class Meta:
+        model = Book
+        sqla_session = db.session
+
+
+author_schema = AuthorSchema()
 book_schema = BookSchema()
 books_schema = BookSchema(many=True)
 
@@ -115,57 +137,57 @@ db.session.commit()
 ###
 
 
-class Book(Resource):
+class BookResource(Resource):
     '''
     Class that handles REST for '/books/<int:book_id>'
     get, delete and put (update)
     '''
 
     def get(self, book_id):
-        book = dao.get(book_id)
-        if not book:
-            abort(404, message="Book {} doesn't exist".format(book_id))
-        else:
-            return book
+        book = Book.query.get(book_id)
+        result = book_schema.dump(book)
+        return result.data
 
     def delete(self, book_id):
-        try:
-            dao.delete(book_id)
-            return '', 204
-        except KeyError:
-            abort(404, message="Book {} doesn't exist".format(book_id))
+        book = Book.query.get(book_id)
+        db.session.delete(book)
+        db.session.commit()
+        return '', 204
 
     def put(self, book_id):
-        try:
-            args = parser.parse_args()
-            data = args['book']
-            dao.update(book_id, data)
-            return '', 201
-        except KeyError:
-            abort(404, message="Book {} doesn't exist".format(book_id))
+        abort(404, message="Not implemented")
 
 
-class BookList(Resource):
+class BookListResource(Resource):
     ''' shows a list of all Books, and lets you POST to add new tasks '''
 
     def get(self):
-        return dao.get_all()
+        all_books = Book.query.all()
+        result = books_schema.dump(all_books)
+        return result.data
 
     def post(self):
         '''
-        curl -X PUT -H "Content-Type: application/json" \
-        -d '{ "book": { "id": 10, "title": "Test Book 1", \
-            "isbn": "9781234567897", "published_date": "2019-04-13", \
-            "authors": [ "Rea Horne", "Cristiano Searle" ] } }' \
+        curl -X POST -H "Content-Type: application/json" \
+        -d '{ "book": {
+            "published_date": "2019-06-02T18:21:54.171733+00:00", \
+            "title": "Posted book.", \
+            "authors": [4, 5], \
+            "isbn": "5290923846941" \
+            } \
+        }' \
         http://127.0.0.1:5000/books
         '''
         args = parser.parse_args()
-        dao.create(args['book'])
+        obj_json = args['book']
+        book = Book(**obj_json)
+        db.session.add(book)
+        db.session.commit()
         return '', 201
 
 
-api.add_resource(BookList, '/books')
-api.add_resource(Book, '/books/<int:book_id>')
+api.add_resource(BookListResource, '/books')
+api.add_resource(BookResource, '/books/<int:book_id>')
 
 
 if __name__ == '__main__':
