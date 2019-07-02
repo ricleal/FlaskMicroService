@@ -8,86 +8,109 @@ from flask_restful import Api, Resource, abort, reqparse
 
 from datetime import datetime
 
-import sqlalchemy as db
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from faker import Faker
 
 app = Flask(__name__)
 api = Api(app)
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
+fake = Faker()
 
 parser = reqparse.RequestParser()
 parser.add_argument('book', type=dict)
 
 ##############################################################################
 # SQL
-Base = declarative_base()
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
+
 
 books_authors_table = db.Table(
-    'books_authors', Base.metadata,
-    db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
-    db.Column('author_id', db.Integer, db.ForeignKey('author.id'))
+    'books_authors',
+    db.Column('book_id', db.Integer, db.ForeignKey(
+        'book.id'), primary_key=True),
+    db.Column('author_id', db.Integer, db.ForeignKey(
+        'author.id'), primary_key=True),
 )
 
 
-class Book(Base):
+class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     isbn = db.Column(db.String(32), nullable=True)
     published_date = db.Column(db.DateTime, nullable=True)
-    authors = relationship(
+    authors = db.relationship(
         "Author",
         secondary=books_authors_table,
-        back_populates="books")
+        back_populates="books"
+    )
+
+    def __repr__(self):
+        return '<Book %r>' % self.title
 
 
-class Author(Base):
+class Author(db.Model):
     __tablename__ = 'author'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(250), nullable=True)
     last_name = db.Column(db.String(250), nullable=False)
-    books = relationship(
+    books = db.relationship(
         "Book",
         secondary=books_authors_table,
-        back_populates="authors")
+        back_populates="authors"
+    )
+
+    def __repr__(self):
+        return '<Author %r>' % self.last_name
 
 
-engine = db.create_engine('sqlite:///db.db')
-# users.drop(engine) # drops the users table
-Base.metadata.create_all(engine)
+class BookSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ('title', 'isbn', 'authors')
 
-Session = sessionmaker(bind=engine)
-session = Session()
+
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
+
+
+first_names = [fake.first_name() for _ in range(2)]
 
 # Create authors
-session.add_all([
-    Author(first_name="John", last_name="Smith"),
-    Author(first_name="John1", last_name="Smith1"),
-    Author(first_name="John2", last_name="Smith2"),
-    Author(first_name="John3", last_name="Smith3"),
-    Author(first_name="John4", last_name="Smith4"),
+db.session.add_all([
+    Author(first_name=first_names[0], last_name=fake.last_name()),
+    Author(first_name=first_names[1], last_name=fake.last_name()),
+    Author(first_name=fake.first_name(), last_name=fake.last_name()),
+    Author(first_name=fake.first_name(), last_name=fake.last_name()),
+    Author(first_name=fake.first_name(), last_name=fake.last_name()),
+    Author(first_name=fake.first_name(), last_name=fake.last_name()),
 ])
-session.commit()
 
-authors = session.query(Author).filter(Author.first_name.in_(
-    ['John', 'John1'])).all()
+db.session.commit()
 
-session.add(
-    Book(title="title1", isbn="12345678", published_date=datetime.utcnow(),
-         authors=authors)
+authors = db.session.query(Author).filter(Author.first_name.in_(
+    first_names)).all()
+
+db.session.add(
+    Book(title=fake.sentence(nb_words=4), isbn=fake.msisdn(),
+         published_date=datetime.utcnow(), authors=authors)
 )
-session.commit()
+db.session.commit()
 
-authors = session.query(Author).filter(Author.first_name.in_(
-    ['John2', 'John4'])).all()
+db.authors = db.session.query(Author).filter(Author.first_name.in_(
+    first_names)).all()
 
-session.add(
-    Book(title="title2", isbn="464342323", published_date=datetime.utcnow(),
-         authors=authors)
+db.session.add(
+    Book(title=fake.sentence(nb_words=4), isbn=fake.msisdn(),
+         published_date=datetime.utcnow(), authors=authors)
 )
-session.commit()
+db.session.commit()
 
 ###
 
